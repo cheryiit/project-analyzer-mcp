@@ -1,0 +1,19 @@
+{
+  "name": "project-analyzer",
+  "version": "1.0.0",
+  "description": "Enhanced Python-based MCP server for project analysis",
+  "main": "project_analyzer_server.py",
+  "scripts": {
+    "start": "python project_analyzer_server.py",
+    "install": "pip install -r requirements.txt"
+  },
+  "keywords": ["mcp", "project-analysis", "python"],
+  "author": "Claude",
+  "license": "MIT",
+  "mcp": {
+    "server": {
+      "command": "python",
+      "args": ["project_analyzer_server.py"]
+    }
+  }
+}

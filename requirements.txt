@@ -1,0 +1,4 @@
+mcp
+gitignore-parser
+pathlib
+asyncio
