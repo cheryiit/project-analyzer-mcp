@@ -437,6 +437,8 @@ class ProjectAnalyzerMCPServer:
                 return self.handle_project_structure(arguments)
             elif tool_name == 'analyze_files':
                 return self.handle_analyze_files(arguments)
+            elif tool_name == 'analyze_code':
+                return self._handle_analyze_code(arguments)
             elif tool_name == 'configure_analyzer':
                 return self.handle_configure_analyzer(arguments)
             else:
@@ -456,7 +458,23 @@ def main():
     else:
         # For now, just run a simple test
         print("Project Analyzer Python MCP Server")
-        print("Available tools: project_structure, analyze_files, configure_analyzer")
+        print("Available tools: project_structure, analyze_files, analyze_code, configure_analyzer")
+        
+        # Test the new code analysis tool
+        print("\n=== Testing Code Analysis ===")
+        try:
+            code_analysis = server._handle_analyze_code({
+                'project_path': '/Users/yigitkiraz/TrBotMaster',
+                'analysis_type': 'comprehensive',
+                'output_format': 'markdown',
+                'save_results': True
+            })
+            print("Code analysis completed successfully:")
+            print(f"Errors: {code_analysis['_meta']['errors_count']}")
+            print(f"Warnings: {code_analysis['_meta']['warnings_count']}")
+            print(code_analysis['content'][0]['text'][:300] + "...")
+        except Exception as e:
+            print(f"Code analysis test failed: {e}")
         server.run_standalone()
 
 
