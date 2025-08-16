@@ -1,136 +1,221 @@
-# Project Analyzer Python MCP Server
+# 🔍 Project Analyzer MCP
 
-Enhanced Python-based MCP server for comprehensive project analysis, inspired by the architect_design scripts but with more flexibility and MCP integration.
+Enhanced Python-based MCP server for comprehensive project analysis with async support, designed for **Claude Code**, **Cursor**, and **VS Code**.
 
-## Features
+## 🚀 Quick Install
 
-- **Hierarchical Project Structure**: Generate tree-like project structures respecting gitignore rules
-- **File Content Analysis**: Analyze and extract file contents with various formatting options
-- **Flexible Configuration**: Configurable file size limits, supported extensions, and output formats
-- **Multiple Output Formats**: Plain text, Markdown, and JSON output
-- **Pattern-based Analysis**: Analyze specific files or directories using glob patterns
-- **Binary File Handling**: Smart handling of binary files with size information
-- **Gitignore Support**: Full gitignore parsing and filtering
+### Claude Code (Recommended)
+```bash
+# One-liner install from GitHub
+curl -sSL https://raw.githubusercontent.com/cheryiit/project-analyzer-mcp/master/installer.py | python
+```
 
-## Configuration Options
+**Or manual config:**
+```bash
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
 
-The server supports various configuration options:
+Add to your config:
+```json
+{
+  "mcpServers": {
+    "project-analyzer": {
+      "command": "python",
+      "args": ["-c", "exec(__import__('urllib.request').urlopen('https://raw.githubusercontent.com/cheryiit/project-analyzer-mcp/master/main.py').read())"],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    }
+  }
+}
+```
+
+### Alternative Setup Methods
+
+**Direct GitHub download:**
+```bash
+# Download and setup
+git clone https://github.com/cheryiit/project-analyzer-mcp.git
+cd project-analyzer-mcp
+python installer.py
+```
+
+**NPX-style (for consistency with other MCP servers):**
+```json
+{
+  "mcpServers": {
+    "project-analyzer": {
+      "command": "python",
+      "args": ["-c", "import os,subprocess,tempfile,urllib.request; d=tempfile.mkdtemp(); urllib.request.urlretrieve('https://raw.githubusercontent.com/cheryiit/project-analyzer-mcp/master/main.py', os.path.join(d,'main.py')); subprocess.run(['python', os.path.join(d,'main.py')])"]
+    }
+  }
+}
+```
+
+## 🛠️ Available Tools
+
+- **`project_structure`** - Get hierarchical project structure
+- **`analyze_files`** - Analyze specific files or patterns
+- **`analyze_code`** - Comprehensive code analysis (syntax, imports, parameters)
+- **`configure_analyzer`** - Runtime configuration updates
+- **`get_stats`** - Project statistics and file info
+- **`start_background_task`** - Start async analysis tasks
+- **`get_background_result`** - Get async task results
+
+## 💬 Usage in Claude Code
+
+### Basic Analysis
+```
+Analyze this project for syntax errors and import issues
+```
+
+### File Structure
+```
+Show me the project structure, ignoring build and cache files
+```
+
+### Background Analysis
+```
+Start a comprehensive code analysis in the background and show me when it's done
+```
+
+### Specific File Analysis
+```
+Analyze all Python files in the src/ directory for parameter mismatches
+```
+
+## ⚡ Features
+
+- **🔍 Deep Code Analysis** - Syntax errors, import issues, parameter mismatches
+- **🏗️ Project Structure** - Hierarchical view with gitignore support
+- **⚡ Async Processing** - Background analysis for large projects
+- **📊 Comprehensive Reports** - Terminal output + file logging
+- **🎯 Multi-Editor Support** - Claude Code, Cursor, VS Code
+- **🔧 Flexible Config** - JSON config + runtime updates
+
+## 🏗️ Architecture
+
+```
+📦 project-analyzer-mcp/
+├── 🐍 main.py              # Entry point
+├── 📁 src/
+│   ├── core/               # Server & orchestration
+│   ├── analyzers/          # Code & structure analysis  
+│   └── utils/              # File handling & formatting
+├── 📁 config/              # Configuration files
+└── 🔧 installer.py         # One-command installer
+```
+
+## 🔧 Configuration
+
+Default config supports most use cases. For custom settings:
 
 ```json
 {
   "project_name": "MyProject",
-  "default_ignore_file": ".gitignore",
   "max_file_size": 1048576,
-  "supported_extensions": [".py", ".js", ".ts", ".md"],
-  "exclude_patterns": ["__pycache__", "node_modules", ".git"],
-  "include_binary_info": true,
-  "output_format": "markdown"
+  "output_format": "markdown",
+  "enable_background_mode": true,
+  "max_concurrent_analyses": 3,
+  "supported_extensions": [".py", ".js", ".ts", ".jsx", ".tsx"]
 }
 ```
 
-## Available Tools
+## 🚀 Advanced Usage
 
-### 1. project_structure
-
-Generate hierarchical project structure.
-
-**Parameters:**
-- `project_path` (string): Path to project root directory (default: ".")
-- `ignore_file` (string): Custom ignore file name (optional)
-- `output_format` (string): "plain" or "markdown" (default: "markdown")
-
-### 2. analyze_files
-
-Analyze project files with content extraction.
-
-**Parameters:**
-- `project_path` (string): Path to project root directory (default: ".")
-- `target_patterns` (array): Specific file patterns to analyze (optional)
-- `ignore_file` (string): Custom ignore file name (optional)
-- `output_format` (string): "plain", "markdown", or "json" (default: "markdown")
-- `max_file_size` (number): Maximum file size to analyze in bytes (default: 1MB)
-
-### 3. configure_analyzer
-
-Configure analyzer settings dynamically.
-
-**Parameters:**
-- `config` (object): Configuration object with analyzer settings
-
-## Installation
-
-1. Install dependencies:
+### Manual Installation
 ```bash
+git clone https://github.com/cheryiit/project-analyzer-mcp.git
+cd project-analyzer-mcp
 pip install -r requirements.txt
+python main.py --test
 ```
 
-2. Run the server:
-```bash
-python project_analyzer_server.py
-```
-
-## MCP Integration
-
-Add to your MCP client configuration:
-
+### Claude Code Manual Config
 ```json
 {
   "mcpServers": {
-    "project-analyzer-python": {
+    "project-analyzer": {
       "command": "python",
-      "args": ["/path/to/project_analyzer_server.py"],
-      "cwd": "/path/to/project-analyzer-python"
+      "args": ["/path/to/project-analyzer-mcp/main.py"],
+      "env": {
+        "PYTHONPATH": "/path/to/project-analyzer-mcp"
+      }
     }
   }
 }
 ```
 
-## Usage Examples
-
-### Get Project Structure
+### Cursor Config
+Add to Cursor settings:
 ```json
 {
-  "tool": "project_structure",
-  "arguments": {
-    "project_path": "/path/to/project",
-    "output_format": "markdown"
-  }
-}
-```
-
-### Analyze Specific Files
-```json
-{
-  "tool": "analyze_files",
-  "arguments": {
-    "project_path": "/path/to/project",
-    "target_patterns": ["*.py", "config/*.json"],
-    "output_format": "json"
-  }
-}
-```
-
-### Configure Analyzer
-```json
-{
-  "tool": "configure_analyzer",
-  "arguments": {
-    "config": {
-      "max_file_size": 2097152,
-      "output_format": "markdown",
-      "supported_extensions": [".py", ".js", ".ts", ".md", ".json"]
+  "mcpServers": {
+    "project-analyzer": {
+      "command": "python", 
+      "args": ["/path/to/main.py"]
     }
   }
 }
 ```
 
-## Differences from Original architect_design
+## 🧪 Testing
 
-1. **MCP Integration**: Full MCP server implementation with proper tool definitions
-2. **Dynamic Configuration**: Runtime configuration changes without restart
-3. **Multiple Output Formats**: Support for plain, markdown, and JSON output
-4. **Pattern Matching**: Glob pattern support for flexible file selection
-5. **Better Error Handling**: Comprehensive error handling and logging
-6. **Binary File Support**: Smart binary file detection and handling
-7. **Size Limits**: Configurable file size limits
-8. **Extension Filtering**: Configurable supported file extensions
+```bash
+# Test basic functionality
+python main.py --test
+
+# Test async features  
+python main.py --async-test
+
+# Test MCP integration
+claude mcp get project-analyzer
+```
+
+## 🔍 Troubleshooting
+
+### Server Won't Connect
+```bash
+# Test directly
+echo '{"jsonrpc":"2.0","method":"initialize","params":{"protocolVersion":"2024-11-05"},"id":1}' | python main.py
+
+# Check Claude logs
+tail -f ~/.claude/logs/mcp-server-project-analyzer.log
+```
+
+### Permission Issues
+```bash
+# Try project scope instead of user
+claude mcp add project-analyzer --scope project
+
+# Or reinstall with different permissions
+claude mcp remove project-analyzer
+curl -sSL https://raw.githubusercontent.com/cheryiit/project-analyzer-mcp/master/installer.py | python
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🌟 Why This MCP?
+
+- **🚀 Production Ready** - Used in real development workflows
+- **⚡ Fast & Async** - Background processing for large codebases
+- **🎯 Multi-Editor** - Works with Claude Code, Cursor, VS Code
+- **🔍 Comprehensive** - Beyond basic file reading, real code analysis
+- **🛠️ Flexible** - Configurable for any project type
+- **📚 Well Documented** - Clear examples and troubleshooting
+
+---
+
+**Made with ❤️ for the Claude Code community**
+
+*Transform your development workflow with intelligent project analysis directly in Claude Code!*
