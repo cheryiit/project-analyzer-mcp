@@ -1,0 +1,20 @@
+{
+  "project_name": "Project",
+  "default_ignore_file": ".gitignore",
+  "max_file_size": 1048576,
+  "supported_extensions": [
+    ".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".cpp", ".c", ".h",
+    ".go", ".rs", ".php", ".rb", ".swift", ".kt", ".scala", ".sh",
+    ".md", ".txt", ".json", ".yaml", ".yml", ".xml", ".html", ".css"
+  ],
+  "exclude_patterns": [
+    "__pycache__", ".pytest_cache", "node_modules", ".git",
+    ".vscode", ".idea", "*.pyc", "*.pyo", "*.pyd", ".DS_Store"
+  ],
+  "include_binary_info": true,
+  "output_format": "markdown",
+  "enable_background_mode": true,
+  "max_concurrent_analyses": 3,
+  "cache_results": true,
+  "auto_cleanup": true
+}

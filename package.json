@@ -1,19 +1,31 @@
 {
-  "name": "project-analyzer",
-  "version": "1.0.0",
-  "description": "Enhanced Python-based MCP server for project analysis",
-  "main": "project_analyzer_server.py",
+  "name": "project-analyzer-mcp",
+  "version": "2.0.0",
+  "description": "Enhanced modular Python-based MCP server for comprehensive project analysis with async support",
+  "main": "main.py",
   "scripts": {
-    "start": "python project_analyzer_server.py",
-    "install": "pip install -r requirements.txt"
+    "start": "python main.py",
+    "test": "python main.py --test",
+    "async-test": "python main.py --async-test",
+    "install": "pip install -r requirements.txt",
+    "build": "python -m compileall src/",
+    "lint": "python -m flake8 src/ --max-line-length=120",
+    "format": "python -m black src/ --line-length=120"
   },
-  "keywords": ["mcp", "project-analysis", "python"],
-  "author": "Claude",
+  "keywords": ["mcp", "project-analysis", "python", "async", "code-analysis", "claude-code"],
+  "author": "Claude & cheryiit",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cheryiit/project-analyzer-mcp.git"
+  },
   "mcp": {
     "server": {
       "command": "python",
-      "args": ["project_analyzer_server.py"]
+      "args": ["main.py"]
     }
+  },
+  "engines": {
+    "python": ">=3.8"
   }
 }

@@ -1,0 +1,47 @@
+# Virtual Environment
+venv/
+
+# Tests (to avoid confusion during development)
+tests/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database files
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Node modules (if any)
+node_modules/
+
+# Profile and extension directories
+profiles/
+extensions/
+
+bower_components/
+
+.venv/
+
+coverage/
