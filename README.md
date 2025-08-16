@@ -113,13 +113,15 @@ Default config supports most use cases. For custom settings:
 ```json
 {
   "project_name": "MyProject",
-  "max_file_size": 1048576,
+  "max_file_size": 409600,
   "output_format": "markdown",
   "enable_background_mode": true,
   "max_concurrent_analyses": 3,
   "supported_extensions": [".py", ".js", ".ts", ".jsx", ".tsx"]
 }
 ```
+
+**Note**: `max_file_size` is set to 400KB (~100k tokens) for optimal Claude Code performance. Files larger than this will be skipped during analysis.
 
 ## 🚀 Advanced Usage
 

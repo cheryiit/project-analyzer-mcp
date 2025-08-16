@@ -13,7 +13,9 @@ class ProjectAnalyzerConfig:
         # Default configuration
         self.project_name = self.config.get('project_name', 'Project')
         self.default_ignore_file = self.config.get('default_ignore_file', '.gitignore')
-        self.max_file_size = self.config.get('max_file_size', 1024 * 1024)  # 1MB
+        # Max file size: ~100k tokens (400KB) - optimal for Claude Code analysis
+        # 1 token ≈ 4 characters, so 100k tokens ≈ 400KB
+        self.max_file_size = self.config.get('max_file_size', 400 * 1024)
         self.supported_extensions = self.config.get('supported_extensions', [
             '.py', '.js', '.ts', '.jsx', '.tsx', '.java', '.cpp', '.c', '.h',
             '.go', '.rs', '.php', '.rb', '.swift', '.kt', '.scala', '.sh',
